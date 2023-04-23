@@ -1,0 +1,21 @@
+name: MacOS12
+on: 
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install VNC server
+
+      run: brew install tiger-vnc
+    - name: Set password
+      run: printf "password\npassword\n\n" | vncpasswd
+    - name: ngrok is now listening to VNC connections on...
+      run: curl http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v2
