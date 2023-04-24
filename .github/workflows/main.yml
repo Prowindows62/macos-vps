@@ -10,6 +10,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Disable Spotlight indexing
+      run: sudo mdutil -i off -a
     - name: Setup VNC Server (#1)
 
       run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -allowAccessFor -allUsers -privs -all
@@ -25,7 +27,7 @@ jobs:
       run: brew install ngrok/ngrok/ngrok
     - name: Setup user
 
-      run: sudo dscl . -create /Users/user ;  sudo dscl . -create /Users/user UserShell /bin/bash ; sudo dscl . -create /Users/user RealName “Your name” ; sudo dscl . -create /Users/user UniqueID 1001 ;  sudo dscl . -create /Users/user PrimaryGroupID 1000 ; sudo dscl . -create /Users/user NFSHomeDirectory /Local/Users/user ; sudo dscl . -passwd /Users/user password ; sudo dscl . -append /Groups/admin GroupMembership user
+      run: source setuser.sh
     - name: Set up ngrok
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
