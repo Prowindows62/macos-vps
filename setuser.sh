@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo mdutil -i off -a
-
 
 sudo dscl . -create /Users/vncuser
 sudo dscl . -create /Users/vncuser UserShell /bin/bash
